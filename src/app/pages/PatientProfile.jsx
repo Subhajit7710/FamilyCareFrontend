@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useParams, useNavigate, useLocation } from 'react-router';
 import { ArrowLeft, Plus, CheckCircle, Clock, AlertCircle } from 'lucide-react';
 import Sidebar from '../components/Sidebar';
+import MobileHeader from '../components/MobileHeader';
 import AddMedicationModal from '../components/AddMedicationModal';
 import { healthService } from '../services/api';
 
@@ -157,16 +158,19 @@ export default function PatientProfile() {
   const takenMedications = medications.filter(med => med.status === 'Taken' || med.status === 'taken');
 
   return (
-    <div className="flex min-h-screen bg-gray-50">
+    <div className="flex flex-col md:flex-row min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors">
       {/* Sidebar - Hidden on mobile */}
       <div className="hidden md:block">
         <Sidebar />
       </div>
 
+      {/* Mobile Header */}
+      <MobileHeader />
+
       {/* Main Content */}
       <div className="flex-1 overflow-auto">
         {/* Header */}
-        <div className="bg-white border-b border-gray-200 p-4 md:p-6">
+        <div className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 p-4 md:p-6 transition-colors">
           <button
             onClick={() => navigate('/dashboard')}
             className="flex items-center gap-2 text-gray-600 hover:text-gray-900 mb-4 transition-colors"
@@ -181,8 +185,8 @@ export default function PatientProfile() {
                 {patient.avatar}
               </div>
               <div>
-                <h1 className="text-2xl font-semibold mb-1">{patient.name}</h1>
-                <div className="flex items-center gap-3 text-sm text-gray-600">
+                <h1 className="text-2xl font-semibold mb-1 dark:text-white">{patient.name}</h1>
+                <div className="flex flex-wrap items-center gap-3 text-sm text-gray-600 dark:text-gray-400">
                   <span>{patient.role} · Age {patient.age}</span>
                   <span className="px-2 py-1 rounded-full bg-green-100 text-green-700 text-xs font-medium">
                     Type 2 Diabetes
@@ -196,16 +200,16 @@ export default function PatientProfile() {
           </div>
         </div>
 
-        <div className="p-4 md:p-6">
+        <div className="p-4 md:p-6 pb-24 md:pb-6">
           {/* Tabs */}
-          <div className="bg-white rounded-xl border border-gray-200 mb-6">
-            <div className="flex border-b border-gray-200">
+          <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 mb-6 transition-colors">
+            <div className="flex border-b border-gray-200 dark:border-gray-700 overflow-x-auto whitespace-nowrap scrollbar-hide">
               <button
                 onClick={() => setActiveTab('medications')}
                 className={`flex-1 px-6 py-4 font-medium transition-colors relative ${
                   activeTab === 'medications'
                     ? 'text-teal-600'
-                    : 'text-gray-600 hover:text-gray-900'
+                    : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200'
                 }`}
               >
                 Medications
@@ -218,7 +222,7 @@ export default function PatientProfile() {
                 className={`flex-1 px-6 py-4 font-medium transition-colors relative ${
                   activeTab === 'appointments'
                     ? 'text-teal-600'
-                    : 'text-gray-600 hover:text-gray-900'
+                    : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200'
                 }`}
               >
                 Appointments
@@ -231,7 +235,7 @@ export default function PatientProfile() {
                 className={`flex-1 px-6 py-4 font-medium transition-colors relative ${
                   activeTab === 'healthlog'
                     ? 'text-teal-600'
-                    : 'text-gray-600 hover:text-gray-900'
+                    : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200'
                 }`}
               >
                 Health Log
@@ -245,7 +249,7 @@ export default function PatientProfile() {
             {activeTab === 'medications' && (
               <div className="p-6">
                 <div className="flex items-center justify-between mb-6">
-                  <h2 className="text-lg font-semibold">All Medications</h2>
+                  <h2 className="text-lg font-semibold dark:text-white">All Medications</h2>
                   <button
                     onClick={() => setIsAddModalOpen(true)}
                     className="flex items-center gap-2 px-4 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition-colors"
@@ -277,22 +281,24 @@ export default function PatientProfile() {
                   {medications.map((medication) => (
                     <div
                       key={medication.id}
-                      className="flex items-center gap-4 p-4 bg-gray-50 rounded-lg border border-gray-200 hover:bg-gray-100 transition-colors"
+                      className="flex flex-col sm:flex-row sm:items-center gap-4 p-4 bg-gray-50 dark:bg-gray-700/30 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700/60 transition-colors"
                     >
-                      {/* Status Icon */}
-                      <div className="flex-shrink-0">
-                        {getStatusIcon(medication.status)}
-                      </div>
+                      {/* Top section on mobile, flex row */}
+                      <div className="flex items-center gap-4 w-full sm:w-auto flex-1 min-w-0">
+                        {/* Status Icon */}
+                        <div className="flex-shrink-0">
+                          {getStatusIcon(medication.status)}
+                        </div>
 
-                      {/* Medication Info */}
-                      <div className="flex-1 min-w-0">
+                        {/* Medication Info */}
+                        <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2 mb-1">
-                          <h3 className="font-semibold">{medication.name}</h3>
+                          <h3 className="font-semibold dark:text-white">{medication.name}</h3>
                           <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${getStatusBadgeColor(medication.status)}`}>
                             {getStatusLabel(medication.status)}
                           </span>
                         </div>
-                        <div className="flex items-center gap-4 text-sm text-gray-600">
+                        <div className="flex flex-wrap items-center gap-2 sm:gap-4 text-sm text-gray-600 dark:text-gray-400">
                           <span>{medication.dosage}</span>
                           <span>·</span>
                           <span>{medication.frequency}</span>
@@ -300,12 +306,13 @@ export default function PatientProfile() {
                           <span>{medication.schedule || medication.time || '—'}</span>
                         </div>
                       </div>
+                      </div>
 
                       {/* Action Button */}
                       {(normalizeStatus(medication.status) === 'upcoming' || normalizeStatus(medication.status) === 'active') && (
                         <button
                           onClick={() => handleMarkTaken(medication.id)}
-                          className="px-4 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition-colors text-sm font-medium whitespace-nowrap"
+                          className="w-full sm:w-auto px-4 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition-colors text-sm font-medium whitespace-nowrap"
                         >
                           Mark Taken
                         </button>
@@ -314,7 +321,7 @@ export default function PatientProfile() {
                       {normalizeStatus(medication.status) === 'missed' && (
                         <button
                           onClick={() => handleMarkTaken(medication.id)}
-                          className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors text-sm font-medium whitespace-nowrap"
+                          className="w-full sm:w-auto px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors text-sm font-medium whitespace-nowrap"
                         >
                           Mark Taken
                         </button>
@@ -362,16 +369,16 @@ export default function PatientProfile() {
 
           {/* Stats */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="bg-white rounded-xl p-6 border border-gray-200">
-              <div className="text-sm text-gray-600 mb-1">Total Medications</div>
-              <div className="text-3xl font-bold">{medications.length}</div>
+            <div className="bg-white dark:bg-gray-800 rounded-xl p-6 border border-gray-200 dark:border-gray-700 transition-colors">
+              <div className="text-sm text-gray-600 dark:text-gray-400 mb-1">Total Medications</div>
+              <div className="text-3xl font-bold dark:text-white">{medications.length}</div>
             </div>
-            <div className="bg-white rounded-xl p-6 border border-gray-200">
-              <div className="text-sm text-gray-600 mb-1">Taken Today</div>
+            <div className="bg-white dark:bg-gray-800 rounded-xl p-6 border border-gray-200 dark:border-gray-700 transition-colors">
+              <div className="text-sm text-gray-600 dark:text-gray-400 mb-1">Taken Today</div>
               <div className="text-3xl font-bold text-green-600">{takenMedications.length}</div>
             </div>
-            <div className="bg-white rounded-xl p-6 border border-gray-200">
-              <div className="text-sm text-gray-600 mb-1">Missed</div>
+            <div className="bg-white dark:bg-gray-800 rounded-xl p-6 border border-gray-200 dark:border-gray-700 transition-colors">
+              <div className="text-sm text-gray-600 dark:text-gray-400 mb-1">Missed</div>
               <div className="text-3xl font-bold text-red-600">{missedMedications.length}</div>
             </div>
           </div>

@@ -2,6 +2,8 @@ import { createBrowserRouter, Navigate } from 'react-router';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import PatientProfile from './pages/PatientProfile';
+import Calendar from './pages/Calendar';
+import Settings from './pages/Settings';
 import NotFound from './pages/NotFound';
 import { AuthProvider } from './context/AuthContext';
 
@@ -49,7 +51,7 @@ export const router = createBrowserRouter([
     path: '/calendar',
     element: (
       <ProtectedRoute>
-        <Dashboard />
+        <Calendar />
       </ProtectedRoute>
     ),
   },
@@ -57,7 +59,7 @@ export const router = createBrowserRouter([
     path: '/settings',
     element: (
       <ProtectedRoute>
-        <Dashboard />
+        <Settings />
       </ProtectedRoute>
     ),
   },

@@ -2,8 +2,9 @@
 // API CONFIGURATION - FILL IN YOUR API DETAILS
 // ============================================
 
-// TODO: Replace with your actual API base URL
-const API_BASE_URL = 'http://localhost:3000';
+// Backend (API gateway) URL. Set VITE_API_URL in .env / on Vercel,
+// e.g. VITE_API_URL=https://familycare.duckdns.org
+export const API_BASE_URL = (import.meta.env.VITE_API_URL || 'http://localhost:3000').replace(/\/+$/, '');
 
 // TODO: Replace with your actual API key if needed
 const API_KEY = 'YOUR_API_KEY_HERE';
