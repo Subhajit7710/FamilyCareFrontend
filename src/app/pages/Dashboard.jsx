@@ -272,16 +272,16 @@ export default function Dashboard() {
 
   if (!user?.familyId && !user?.family_id) {
     return (
-      <div className="flex min-h-screen bg-gray-50 items-center justify-center p-4">
-        <div className="max-w-md w-full bg-white rounded-xl shadow-lg p-8 border border-gray-100 text-center">
-          <div className="w-16 h-16 bg-teal-100 rounded-full flex items-center justify-center mx-auto mb-4">
+      <div className="flex min-h-screen bg-gray-50 dark:bg-gray-900 items-center justify-center p-4">
+        <div className="max-w-md w-full bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-xl shadow-lg p-8 border border-gray-100 dark:border-gray-700 text-center">
+          <div className="w-16 h-16 bg-teal-100 dark:bg-teal-900/40 rounded-full flex items-center justify-center mx-auto mb-4">
             <Share2 className="w-8 h-8 text-teal-600" />
           </div>
           <h2 className="text-2xl font-bold mb-2">Welcome to FamilyCare</h2>
-          <p className="text-gray-600 mb-8">You are not part of any family group yet. Would you like to create a new one or join an existing family?</p>
+          <p className="text-gray-600 dark:text-gray-300 mb-8">You are not part of any family group yet. Would you like to create a new one or join an existing family?</p>
           
           {error && (
-             <div className="mb-4 p-3 bg-red-50 text-red-700 text-sm rounded-lg border border-red-200">
+             <div className="mb-4 p-3 bg-red-50 dark:bg-red-900/30 text-red-700 dark:text-red-300 text-sm rounded-lg border border-red-200 dark:border-red-800">
                {error}
              </div>
           )}
@@ -293,12 +293,12 @@ export default function Dashboard() {
                 placeholder="e.g. FAM-123"
                 value={joinCodeInput} 
                 onChange={e => setJoinCodeInput(e.target.value.toUpperCase())} 
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 font-mono tracking-widest text-center"
+                className="w-full px-4 py-3 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 font-mono tracking-widest text-center"
               />
               <button disabled={loading || !joinCodeInput} onClick={handleJoinFamily} className="w-full bg-teal-600 text-white flex justify-center py-3 rounded-lg font-medium hover:bg-teal-700 disabled:opacity-50 transition">
                 {loading ? 'Joining...' : 'Join Family'}
               </button>
-              <button onClick={() => { setJoinMode(false); setError(''); }} className="w-full text-gray-500 py-3 rounded-lg font-medium hover:bg-gray-50 transition">
+              <button onClick={() => { setJoinMode(false); setError(''); }} className="w-full text-gray-500 dark:text-gray-400 py-3 rounded-lg font-medium hover:bg-gray-50 dark:hover:bg-gray-700 transition">
                 Back
               </button>
             </div>
@@ -307,7 +307,7 @@ export default function Dashboard() {
               <button onClick={handleGenerateInvite} className="w-full bg-teal-600 text-white flex justify-center py-3 rounded-lg font-medium hover:bg-teal-700 shadow-sm transition">
                 Create New Family
               </button>
-              <button onClick={() => setJoinMode(true)} className="w-full border-2 border-teal-600 text-teal-700 bg-white py-3 rounded-lg font-medium hover:bg-teal-50 transition">
+              <button onClick={() => setJoinMode(true)} className="w-full border-2 border-teal-600 text-teal-700 dark:text-teal-300 bg-white dark:bg-transparent py-3 rounded-lg font-medium hover:bg-teal-50 dark:hover:bg-teal-900/30 transition">
                 Join Existing Family
               </button>
             </div>

@@ -58,20 +58,20 @@ export default function AddMedicationModal({ isOpen, onClose, patientName, onAdd
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-      <div className="bg-white rounded-2xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-hidden flex flex-col">
+      <div className="bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-2xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-hidden flex flex-col">
         {/* Header */}
-        <div className="p-6 border-b border-gray-200">
+        <div className="p-6 border-b border-gray-200 dark:border-gray-700">
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-2xl font-semibold">Add Medication</h2>
             <button
               onClick={handleClose}
-              className="text-gray-400 hover:text-gray-600 transition-colors"
+              className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition-colors"
             >
               <X className="w-6 h-6" />
             </button>
           </div>
 
-          <p className="text-gray-600 mb-4">for {patientName}</p>
+          <p className="text-gray-600 dark:text-gray-400 mb-4">for {patientName}</p>
 
           {/* Step indicator */}
           <div className="flex items-center gap-2">
@@ -81,7 +81,7 @@ export default function AddMedicationModal({ isOpen, onClose, patientName, onAdd
                   className={`flex items-center justify-center w-8 h-8 rounded-full text-sm font-medium transition-colors ${
                     index <= activeStep
                       ? 'bg-teal-600 text-white'
-                      : 'bg-gray-200 text-gray-600'
+                      : 'bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-300'
                   }`}
                 >
                   {index + 1}
@@ -96,7 +96,7 @@ export default function AddMedicationModal({ isOpen, onClose, patientName, onAdd
                 {index < steps.length - 1 && (
                   <div
                     className={`flex-1 h-0.5 mx-2 ${
-                      index < activeStep ? 'bg-teal-600' : 'bg-gray-200'
+                      index < activeStep ? 'bg-teal-600' : 'bg-gray-200 dark:bg-gray-700'
                     }`}
                   />
                 )}
@@ -110,7 +110,7 @@ export default function AddMedicationModal({ isOpen, onClose, patientName, onAdd
           {/* Step 0: Select Medication */}
           {activeStep === 0 && (
             <div className="space-y-4">
-              <label className="block text-sm font-medium text-gray-700">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                 Search Medication
               </label>
               <div className="relative">
@@ -120,13 +120,13 @@ export default function AddMedicationModal({ isOpen, onClose, patientName, onAdd
                   value={medicationName}
                   onChange={(e) => handleSearch(e.target.value)}
                   placeholder="Type medication name..."
-                  className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                  className="w-full pl-10 pr-4 py-3 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
                   autoFocus
                 />
               </div>
 
               {searchResults.length > 0 && (
-                <div className="border border-gray-200 rounded-lg divide-y divide-gray-200">
+                <div className="border border-gray-200 dark:border-gray-700 rounded-lg divide-y divide-gray-200 dark:divide-gray-700">
                   {searchResults.map((drug) => (
                     <button
                       key={drug.id}
@@ -134,10 +134,10 @@ export default function AddMedicationModal({ isOpen, onClose, patientName, onAdd
                         setMedicationName(drug.name);
                         setSearchResults([]);
                       }}
-                      className="w-full text-left px-4 py-3 hover:bg-gray-50 transition-colors"
+                      className="w-full text-left px-4 py-3 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
                     >
                       <div className="font-medium">{drug.name}</div>
-                      <div className="text-sm text-gray-500">
+                      <div className="text-sm text-gray-500 dark:text-gray-400">
                         Common dosages: {drug.commonDosages.join(', ')}
                       </div>
                     </button>
@@ -150,7 +150,7 @@ export default function AddMedicationModal({ isOpen, onClose, patientName, onAdd
           {/* Step 1: Dosage */}
           {activeStep === 1 && (
             <div className="space-y-4">
-              <label className="block text-sm font-medium text-gray-700">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                 Dosage for {medicationName}
               </label>
               <input
@@ -158,7 +158,7 @@ export default function AddMedicationModal({ isOpen, onClose, patientName, onAdd
                 value={dosage}
                 onChange={(e) => setDosage(e.target.value)}
                 placeholder="e.g., 500mg, 10ml, 2 tablets"
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                className="w-full px-4 py-3 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
                 autoFocus
               />
 
@@ -167,7 +167,7 @@ export default function AddMedicationModal({ isOpen, onClose, patientName, onAdd
                   <button
                     key={preset}
                     onClick={() => setDosage(preset)}
-                    className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors text-sm"
+                    className="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors text-sm"
                   >
                     {preset}
                   </button>
@@ -180,13 +180,13 @@ export default function AddMedicationModal({ isOpen, onClose, patientName, onAdd
           {activeStep === 2 && (
             <div className="space-y-6">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                   Frequency
                 </label>
                 <select
                   value={frequency}
                   onChange={(e) => setFrequency(e.target.value)}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                  className="w-full px-4 py-3 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
                 >
                   <option value="once-daily">Once daily</option>
                   <option value="twice-daily">Twice daily</option>
@@ -198,14 +198,14 @@ export default function AddMedicationModal({ isOpen, onClose, patientName, onAdd
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                   Time
                 </label>
                 <input
                   type="time"
                   value={time}
                   onChange={(e) => setTime(e.target.value)}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                  className="w-full px-4 py-3 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
                 />
               </div>
             </div>
@@ -214,27 +214,27 @@ export default function AddMedicationModal({ isOpen, onClose, patientName, onAdd
           {/* Step 3: Review */}
           {activeStep === 3 && (
             <div className="space-y-4">
-              <div className="bg-gray-50 rounded-lg p-6 space-y-3">
+              <div className="bg-gray-50 dark:bg-gray-900/50 rounded-lg p-6 space-y-3">
                 <div className="flex justify-between">
-                  <span className="text-gray-600">Medication:</span>
+                  <span className="text-gray-600 dark:text-gray-400">Medication:</span>
                   <span className="font-medium">{medicationName}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-gray-600">Dosage:</span>
+                  <span className="text-gray-600 dark:text-gray-400">Dosage:</span>
                   <span className="font-medium">{dosage}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-gray-600">Frequency:</span>
+                  <span className="text-gray-600 dark:text-gray-400">Frequency:</span>
                   <span className="font-medium">{frequency.replace('-', ' ')}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-gray-600">Time:</span>
+                  <span className="text-gray-600 dark:text-gray-400">Time:</span>
                   <span className="font-medium">{time}</span>
                 </div>
               </div>
 
-              <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-                <p className="text-sm text-blue-900">
+              <div className="bg-blue-50 dark:bg-blue-900/30 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
+                <p className="text-sm text-blue-900 dark:text-blue-200">
                   <strong>Note:</strong> This medication will be added to {patientName}'s schedule. They will receive reminders at the specified time.
                 </p>
               </div>
@@ -243,11 +243,11 @@ export default function AddMedicationModal({ isOpen, onClose, patientName, onAdd
         </div>
 
         {/* Footer */}
-        <div className="p-6 border-t border-gray-200 flex items-center justify-between">
+        <div className="p-6 border-t border-gray-200 dark:border-gray-700 flex items-center justify-between">
           <button
             onClick={() => setActiveStep(Math.max(0, activeStep - 1))}
             disabled={activeStep === 0}
-            className="px-6 py-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="px-6 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
             Cancel
           </button>
